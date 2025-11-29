@@ -41,7 +41,7 @@ public partial class G
     /// <summary>
     /// Bans a user from the current room for the specified duration.
     /// </summary>
-    public void Ban(long userId, BanDuration duration) => Interceptor.Send(Out.RoomBanWithDuration, userId, Room.Id, duration.GetValue());
+    public void Ban(long userId, BanDuration duration) => Interceptor.Send(Out.RoomBanWithDuration, userId, RequireRoom().Id, duration.GetValue());
 
     /// <summary>
     /// Bans a user from the current room for the specified duration.

@@ -1,21 +1,16 @@
-﻿using System;
+﻿using GalaSoft.MvvmLight;
+using MaterialDesignThemes.Wpf;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-
-using Microsoft.Extensions.Logging;
-
-using GalaSoft.MvvmLight;
-
-using MaterialDesignThemes.Wpf;
-
-using Xabbo.Interceptor;
-using Xabbo.Extension;
-
+using Wpf.Ui.Appearance;
 using Xabbo.Core;
 using Xabbo.Core.GameData;
-
+using Xabbo.Extension;
+using Xabbo.Interceptor;
 using Xabbo.Scripter.Engine;
 
 namespace Xabbo.Scripter.ViewModel;

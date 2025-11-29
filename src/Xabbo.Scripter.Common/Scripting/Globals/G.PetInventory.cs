@@ -14,7 +14,7 @@ public partial class G
     /// Call <see cref="EnsureInventory(int)"/> before accessing this
     /// property to ensure that the user's inventory has been loaded.
     /// </summary>
-    public IInventory? Inventory => _inventoryManager.Inventory;
+    public IPetInventory? PetInventory => _petInventoryManager.Inventory;
 
     /// <summary>
     /// Ensures that the inventory of the user is loaded.
@@ -23,8 +23,8 @@ public partial class G
     /// The user must be in a room for the server to return a response.
     /// </summary>
     /// <param name="timeout">The time to wait for a response from the server.</param>
-    public IInventory EnsureInventory(int timeout = DEFAULT_LONG_TIMEOUT) =>
-        _inventoryManager.GetInventoryAsync(timeout, Ct).GetAwaiter().GetResult();
+    public IPetInventory EnsurePetInventory(int timeout = DEFAULT_LONG_TIMEOUT) =>
+        _petInventoryManager.GetPetInventoryAsync(timeout, Ct).GetAwaiter().GetResult();
 
-    public InventoryManager InventoryManager => _inventoryManager;
+    public PetInventoryManager PetInventoryManager => _petInventoryManager;
 }

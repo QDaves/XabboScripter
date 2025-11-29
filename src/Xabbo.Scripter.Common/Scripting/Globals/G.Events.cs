@@ -154,6 +154,11 @@ public partial class G
     public void OnFloorItemAdded(Func<FloorItemEventArgs, Task> callback) => Register(_roomManager, nameof(_roomManager.FloorItemAdded), callback);
 
     /// <summary>
+    /// Registers a callback that is invoked when an item is added to the inventory.
+    /// </summary>
+    public void OnInventoryItemAdded(Action<InventoryItemEventArgs> callback) => Register(_inventoryManager, nameof(_inventoryManager.ItemAdded), callback);
+
+    /// <summary>
     /// Registers a callback that is invoked when a floor item is updated.
     /// This happens when the floor item is moved or rotated.
     /// </summary>

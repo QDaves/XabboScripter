@@ -104,6 +104,29 @@
             </Grid>
         </Grid>
 
+        <!-- Autostart checkbox -->
+        <StackPanel Grid.RowSpan="2"
+                    Margin="16,16,60,16"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                    ToolTip="Autostart on connect (script must be saved)">
+            <TextBlock Text="Autostart" VerticalAlignment="Center" Margin="0,0,6,0"
+                       Foreground="{DynamicResource TextFillColorPrimaryBrush}">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding CanAutostart}" Value="False">
+                                <Setter Property="Opacity" Value="0.4" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+            <CheckBox IsChecked="{Binding IsAutostart, Mode=TwoWay}"
+                      IsEnabled="{Binding CanAutostart}"
+                      VerticalAlignment="Center" />
+        </StackPanel>
+
         <!-- Floating execute/cancel button -->
         <Button Grid.RowSpan="2"
                 Margin="16"

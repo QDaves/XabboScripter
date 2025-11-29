@@ -11,5 +11,6 @@ public interface IGameManager
     FriendManager FriendManager { get; }
     RoomManager RoomManager { get; }
     InventoryManager InventoryManager { get; }
+    PetInventoryManager PetInventoryManager { get; }
     TradeManager TradeManager { get; }
 }

@@ -17,6 +17,7 @@ using Xabbo.Scripter.Engine;
 using Xabbo.Scripter.Services;
 using Xabbo.Scripter.Events;
 using Xabbo.Scripter.Util;
+using Xabbo.Scripter.Configuration;
 
 namespace Xabbo.Scripter.ViewModel;
 
@@ -122,7 +123,36 @@ public class ScriptViewModel : ObservableObject, IScript, IDisposable
     public bool IsSavedToDisk
     {
         get => _isSavedToDisk;
-        set => Set(ref _isSavedToDisk, value);
+        set
+        {
+            if (Set(ref _isSavedToDisk, value))
+            {
+                RaisePropertyChanged(nameof(CanAutostart));
+                RaisePropertyChanged(nameof(IsAutostart));
+            }
+        }
+    }
+
+    private AutostartService? _autostartService;
+
+    public bool IsAutostart
+    {
+        get => IsSavedToDisk && _autostartService?.IsAutostart(FileName) == true;
+        set
+        {
+            if (!IsSavedToDisk) return;
+            _autostartService?.SetAutostart(FileName, value);
+            RaisePropertyChanged();
+        }
+    }
+
+    public bool CanAutostart => IsSavedToDisk;
+
+    public void SetAutostartService(AutostartService service)
+    {
+        _autostartService = service;
+        RaisePropertyChanged(nameof(IsAutostart));
+        RaisePropertyChanged(nameof(CanAutostart));
     }
 
     private bool _isLoaded;
@@ -325,6 +355,7 @@ public class ScriptViewModel : ObservableObject, IScript, IDisposable
             IsLogging = false;
 
             _resultText.Clear();
+            _resultText.Append($"[{DateTimeOffset.Now:HH:mm:ss}] ");
             _resultText.Append(update.Message);
         }
         else
@@ -338,6 +369,7 @@ public class ScriptViewModel : ObservableObject, IScript, IDisposable
 
             if (_resultText.Length > 0)
                 _resultText.Append('\n');
+            _resultText.Append($"[{DateTimeOffset.Now:HH:mm:ss}] ");
             _resultText.Append(update.Message);
         }
 

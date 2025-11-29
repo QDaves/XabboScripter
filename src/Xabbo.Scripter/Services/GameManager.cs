@@ -20,6 +20,7 @@ public class GameManager : IGameManager
     public RoomManager RoomManager { get; private set; }
     public TradeManager TradeManager { get; private set; }
     public InventoryManager InventoryManager { get; private set; }
+    public PetInventoryManager PetInventoryManager { get; private set; }
     public FriendManager FriendManager { get; private set; }
 
     public GameManager(
@@ -31,6 +32,7 @@ public class GameManager : IGameManager
         FriendManager friendManager,
         RoomManager roomManager,
         InventoryManager inventoryManager,
+        PetInventoryManager petInventoryManager,
         TradeManager tradeManager)
     {
         _logger = logger;
@@ -49,6 +51,7 @@ public class GameManager : IGameManager
         FriendManager = friendManager;
         RoomManager = roomManager;
         InventoryManager = inventoryManager;
+        PetInventoryManager = petInventoryManager;
         TradeManager = tradeManager;
     }
 

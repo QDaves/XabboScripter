@@ -94,6 +94,12 @@
                             PageType="{x:Type pages:ScriptsPage}"
                         />
                         <ui:NavigationItem
+                            Content="Tasks"
+                            Icon="Play20"
+                            PageTag="tasks"
+                            PageType="{x:Type pages:TasksPage}"
+                        />
+                        <ui:NavigationItem
                             Content="Tools"
                             Icon="Toolbox20"
                             PageTag="tools"

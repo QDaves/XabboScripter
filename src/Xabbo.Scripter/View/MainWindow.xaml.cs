@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -15,6 +13,7 @@ namespace Xabbo.Scripter.View;
 public partial class MainWindow : UiWindow, INavigationWindow
 {
     private readonly INavigationService _nav;
+    private bool _firstActivation = true;
 
     public MainWindow(MainViewManager manager,
         INavigationService nav,
@@ -28,7 +27,6 @@ public partial class MainWindow : UiWindow, INavigationWindow
         _nav.SetNavigationControl(RootNavigation);
         SetPageService(pageService);
 
-        Loaded += MainWindow_Loaded;
         Activated += MainWindow_Activated;
 
         RootFrame.Navigating += RootFrame_Navigating;
@@ -42,27 +40,18 @@ public partial class MainWindow : UiWindow, INavigationWindow
 
     private void ButtonPin_Click(object sender, RoutedEventArgs e) => Topmost = !Topmost;
 
-    private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
-    {
-        Loaded -= MainWindow_Loaded;
-
-        MainViewManager mainViewManager = (MainViewManager)DataContext;
-        await Task.Run(() => mainViewManager.InitializeAsync(CancellationToken.None));
-    }
-
     private void MainWindow_Activated(object? sender, EventArgs e)
     {
-        Activated -= MainWindow_Activated;
+        if (!_firstActivation) return;
+        _firstActivation = false;
 
         Navigate(typeof(Pages.LogPage));
+
+        Wpf.Ui.Appearance.Theme.Apply(Wpf.Ui.Appearance.ThemeType.Light, updateAccent: false, forceBackground: true);
+
+        Wpf.Ui.Appearance.Theme.Apply(Wpf.Ui.Appearance.ThemeType.Dark, updateAccent: false, forceBackground: true);
     }
 
-    protected override void OnClosed(EventArgs e)
-    {
-        base.OnClosed(e);
-
-        Application.Current.Shutdown();
-    }
 
     #region - INavigationWindow -
     public void CloseWindow() => Close();

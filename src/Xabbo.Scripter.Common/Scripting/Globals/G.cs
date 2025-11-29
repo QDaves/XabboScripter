@@ -37,6 +37,7 @@ public partial class G : IDisposable
     private FriendManager _friendManager => _scriptHost.GameManager.FriendManager;
     private RoomManager _roomManager => _scriptHost.GameManager.RoomManager;
     private InventoryManager _inventoryManager => _scriptHost.GameManager.InventoryManager;
+    private PetInventoryManager _petInventoryManager => _scriptHost.GameManager.PetInventoryManager;
     private TradeManager _tradeManager => _scriptHost.GameManager.TradeManager;
 
     /// <summary>

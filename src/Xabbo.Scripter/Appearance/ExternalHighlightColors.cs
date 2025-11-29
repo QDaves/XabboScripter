@@ -120,36 +120,6 @@ public class ExternalHighlightColors : IClassificationHighlightColors
             }
 
             return map.ToImmutableDictionary();
-
-            var definitions = System.Text.Json.JsonSerializer.Deserialize<List<HighlightingColorDefinition>>(
-                System.IO.File.ReadAllText("theme.json")
-            ) ?? throw new Exception("Failed to deserialize theme.");
-
-            foreach (var definition in definitions)
-            {
-                HighlightingColor brush = new HighlightingColor();
-
-                if (!string.IsNullOrWhiteSpace(definition.Foreground))
-                {
-                    brush.Foreground = new SimpleHighlightingBrush(
-                        ParseColor(definition.Foreground)
-                    );
-                }
-
-                if (!string.IsNullOrWhiteSpace(definition.Background))
-                {
-                    brush.Background = new SimpleHighlightingBrush(
-                        ParseColor(definition.Background)
-                    );
-                }
-
-                foreach (string scope in definition.Scopes)
-                {
-                    map[scope] = AsFrozen(brush);
-                }
-            }
-
-            return map.ToImmutableDictionary();
         });
     }
 

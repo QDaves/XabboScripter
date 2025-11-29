@@ -67,7 +67,19 @@ public partial class G
     /// <summary>
     /// Gets the user's current duckets.
     /// </summary>
-    public int UserDuckets => UserPoints[ActivityPointType.Ducket];
+    public int UserDuckets {
+        get
+        {
+            try
+            {
+                return UserPoints[ActivityPointType.Ducket];
+            }
+            catch
+            {
+                return 10;
+            }
+        }
+    }
 
     /// <summary>
     /// Sets the user's motto.

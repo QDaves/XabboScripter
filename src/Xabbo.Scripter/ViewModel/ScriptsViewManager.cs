@@ -27,6 +27,7 @@ using Xabbo.Scripter.Model;
 using Xabbo.Scripter.Services;
 using Xabbo.Scripter.Engine;
 using Xabbo.Scripter.Tabs;
+using Xabbo.Scripter.Configuration;
 
 namespace Xabbo.Scripter.ViewModel;
 
@@ -36,6 +37,7 @@ public class ScriptsViewManager : ObservableObject
     private readonly ScriptEngine _engine;
     private readonly FileSystemWatcher _fsw;
     private readonly ISnackbarMessageQueue _snackbar;
+    private readonly AutostartService _autostartService;
 
     private int _currentScriptIndex = 0;
 
@@ -112,13 +114,15 @@ public class ScriptsViewManager : ObservableObject
     public ScriptsViewManager(
         IUiContext uiContext,
         ScriptEngine engine,
-        ISnackbarMessageQueue snackbar)
+        ISnackbarMessageQueue snackbar,
+        AutostartService autostartService)
     {
         InterTabClient = new ScripterInterTabClient(this);
 
         _uiContext = uiContext;
         _engine = engine;
         _snackbar = snackbar;
+        _autostartService = autostartService;
 
         _scripts = new ObservableCollection<ScriptViewModel>();
         Scripts = CollectionViewSource.GetDefaultView(_scripts);
@@ -148,6 +152,7 @@ public class ScriptsViewManager : ObservableObject
         NewItemFactory = () => CreateNewScript();
 
         LoadScripts();
+        _autostartService.Initialize(this);
 
         _fileUpdate
             .AsObservable()
@@ -217,10 +222,9 @@ public class ScriptsViewManager : ObservableObject
                 }
             }
 
-            _scripts.Add(new ScriptViewModel(Engine, model)
-            {
-                IsSavedToDisk = true
-            });
+            var script = new ScriptViewModel(Engine, model) { IsSavedToDisk = true };
+            script.SetAutostartService(_autostartService);
+            _scripts.Add(script);
         }
     }
 
@@ -232,6 +236,7 @@ public class ScriptsViewManager : ObservableObject
         };
 
         ScriptViewModel scriptViewModel = new(_engine, model) { IsLoaded = true };
+        scriptViewModel.SetAutostartService(_autostartService);
 
         _scripts.Add(scriptViewModel);
 
@@ -246,6 +251,7 @@ public class ScriptsViewManager : ObservableObject
         };
 
         ScriptViewModel scriptViewModel = new(_engine, model) { IsLoaded = true };
+        scriptViewModel.SetAutostartService(_autostartService);
 
         _scripts.Add(scriptViewModel);
         OpenTabs.Add(scriptViewModel);

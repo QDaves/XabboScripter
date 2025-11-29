@@ -167,6 +167,7 @@ public partial class App : Application
         // Scripting
         services.AddSingleton<IScriptHost, ScriptHost>();
         services.AddSingleton<ScriptEngine>();
+        services.AddSingleton<AutostartService>();
 
         // View managers
         Type[] localAssemblyTypes = Assembly.GetExecutingAssembly().GetTypes();
