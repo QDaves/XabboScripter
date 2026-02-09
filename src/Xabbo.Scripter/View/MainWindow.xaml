@@ -94,7 +94,7 @@
                             PageType="{x:Type pages:ScriptsPage}"
                         />
                         <ui:NavigationItem
-                            Content="Tasks"
+                            Content="Autostart"
                             Icon="Play20"
                             PageTag="tasks"
                             PageType="{x:Type pages:TasksPage}"

@@ -104,34 +104,62 @@
             </Grid>
         </Grid>
 
-        <!-- Autostart checkbox -->
+        <!-- Floating execute/cancel button + autostart -->
         <StackPanel Grid.RowSpan="2"
-                    Margin="16,16,60,16"
+                    Margin="16"
                     Orientation="Horizontal"
-                    HorizontalAlignment="Right" VerticalAlignment="Bottom"
-                    ToolTip="Autostart on connect (script must be saved)">
-            <TextBlock Text="Autostart" VerticalAlignment="Center" Margin="0,0,6,0"
-                       Foreground="{DynamicResource TextFillColorPrimaryBrush}">
-                <TextBlock.Style>
-                    <Style TargetType="TextBlock">
+                    HorizontalAlignment="Right" VerticalAlignment="Bottom">
+
+            <ToggleButton Width="36" Height="36"
+                          IsChecked="{Binding IsAutostart, Mode=TwoWay}"
+                          IsEnabled="{Binding CanAutostart}"
+                          ToolTip="Autostart on connect"
+                          Margin="0,0,8,0"
+                          md:ShadowAssist.ShadowDepth="Depth1"
+                          md:ShadowAssist.Darken="False">
+                <ToggleButton.Style>
+                    <Style TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource MaterialDesignFloatingActionMiniButton}">
+                        <Setter Property="Background">
+                            <Setter.Value>
+                                <SolidColorBrush Color="White" />
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="BorderBrush">
+                            <Setter.Value>
+                                <SolidColorBrush Color="{DynamicResource ApplicationBackgroundColor}" Opacity="0.5" />
+                            </Setter.Value>
+                        </Setter>
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding CanAutostart}" Value="False">
-                                <Setter Property="Opacity" Value="0.4" />
-                            </DataTrigger>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter Property="Background">
+                                    <Setter.Value>
+                                        <SolidColorBrush Color="White" />
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.35" />
+                            </Trigger>
                         </Style.Triggers>
                     </Style>
-                </TextBlock.Style>
-            </TextBlock>
-            <CheckBox IsChecked="{Binding IsAutostart, Mode=TwoWay}"
-                      IsEnabled="{Binding CanAutostart}"
-                      VerticalAlignment="Center" />
-        </StackPanel>
+                </ToggleButton.Style>
+                <md:PackIcon Kind="Replay" Width="22" Height="22"
+                             Foreground="{DynamicResource ApplicationBackgroundColorBrush}">
+                    <md:PackIcon.Style>
+                        <Style TargetType="md:PackIcon">
+                            <Setter Property="Opacity" Value="0.4" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsAutostart}" Value="True">
+                                    <Setter Property="Foreground" Value="#2E7D32" />
+                                    <Setter Property="Opacity" Value="1" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </md:PackIcon.Style>
+                </md:PackIcon>
+            </ToggleButton>
 
-        <!-- Floating execute/cancel button -->
-        <Button Grid.RowSpan="2"
-                Margin="16"
-                HorizontalAlignment="Right" VerticalAlignment="Bottom"
-                Width="36" Height="36"
+        <Button Width="36" Height="36"
                 md:ShadowAssist.ShadowDepth="Depth1"
                 md:ShadowAssist.Darken="False"
                 md:ButtonProgressAssist.IsIndeterminate="True"
@@ -207,6 +235,7 @@
                 </md:PackIcon.Style>
             </md:PackIcon>
         </Button>
+        </StackPanel>
 
     </Grid>
 </UserControl>
