@@ -3,7 +3,7 @@
 	url = https://github.com/b7c/Xabbo.Common
 [submodule "Xabbo.Core"]
 	path = lib/Xabbo.Core
-	url = https://github.com/b7c/Xabbo.Core
+	url = https://github.com/QDaves/core-xabbo
 [submodule "Xabbo.GEarth"]
 	path = lib/Xabbo.GEarth
 	url = https://github.com/b7c/Xabbo.GEarth
