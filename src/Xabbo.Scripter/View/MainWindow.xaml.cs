@@ -47,8 +47,6 @@ public partial class MainWindow : UiWindow, INavigationWindow
 
         Navigate(typeof(Pages.LogPage));
 
-        Wpf.Ui.Appearance.Theme.Apply(Wpf.Ui.Appearance.ThemeType.Light, updateAccent: false, forceBackground: true);
-
         Wpf.Ui.Appearance.Theme.Apply(Wpf.Ui.Appearance.ThemeType.Dark, updateAccent: false, forceBackground: true);
     }
 
