@@ -91,6 +91,8 @@ public class ScripterLifetime : IHostLifetime
         if (!_settings.DarkMode)
         {
             Theme.Apply(ThemeType.Light, updateAccent: false);
+            if (_window is View.MainWindow mw)
+                mw.ApplyFallbackBackground(false);
         }
     }
 

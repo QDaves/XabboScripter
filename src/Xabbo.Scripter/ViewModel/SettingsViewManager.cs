@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Text.Json;
+using System.Windows;
 
 using GalaSoft.MvvmLight;
 
@@ -13,7 +14,6 @@ public class SettingsViewManager : ObservableObject
 {
     const string FilePath = "settings.json";
 
-    // private Settings _previousSettings;
     private Settings _settings;
 
     public bool DarkMode
@@ -25,6 +25,10 @@ public class SettingsViewManager : ObservableObject
 
             _settings.DarkMode = value;
             Theme.Apply(value ? ThemeType.Dark : ThemeType.Light, updateAccent: false);
+
+            if (Application.Current.MainWindow is View.MainWindow mw)
+                mw.ApplyFallbackBackground(value);
+
             Save();
 
             RaisePropertyChanged();

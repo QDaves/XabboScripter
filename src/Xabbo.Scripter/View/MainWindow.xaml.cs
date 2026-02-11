@@ -47,7 +47,17 @@ public partial class MainWindow : UiWindow, INavigationWindow
 
         Navigate(typeof(Pages.LogPage));
 
-        Wpf.Ui.Appearance.Theme.Apply(Wpf.Ui.Appearance.ThemeType.Dark, updateAccent: false, forceBackground: true);
+        Wpf.Ui.Appearance.Theme.Apply(Wpf.Ui.Appearance.ThemeType.Dark, updateAccent: false);
+        Wpf.Ui.Appearance.Background.Apply(this, Wpf.Ui.Appearance.BackgroundType.Mica);
+        ApplyFallbackBackground(true);
+    }
+
+    internal void ApplyFallbackBackground(bool dark)
+    {
+        if (Environment.OSVersion.Version.Build >= 22000) return;
+        Background = new System.Windows.Media.SolidColorBrush(
+            dark ? System.Windows.Media.Color.FromRgb(0x20, 0x20, 0x20)
+                 : System.Windows.Media.Color.FromRgb(0xF3, 0xF3, 0xF3));
     }
 
 

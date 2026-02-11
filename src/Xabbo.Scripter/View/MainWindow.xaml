@@ -15,13 +15,12 @@
         UseLayoutRounding="True" SnapsToDevicePixels="True"
         ExtendsContentIntoTitleBar="True"
         WindowCornerPreference="Round"
-        WindowBackdropType="None"
-        WindowStyle="None"
-        Background="#202020">
+        WindowBackdropType="Auto"
+        WindowStyle="None">
     <Window.Resources>
         <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource UiTooltip}" />
     </Window.Resources>
-    <Grid Background="#202020">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
