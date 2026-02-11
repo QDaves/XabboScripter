@@ -171,7 +171,18 @@ public class ScriptEngine
         {
             script.Status = ScriptStatus.CompileError;
             script.ErrorText = "";
-            script.UpdateStatus(ex.ToString());
+
+            var sb = new StringBuilder();
+            sb.AppendLine("Compilation failed:");
+            foreach (var diag in ex.Diagnostics.Where(d => d.Severity >= DiagnosticSeverity.Warning))
+            {
+                var span = diag.Location.GetMappedLineSpan();
+                int line = span.StartLinePosition.Line + 1;
+                int col = span.StartLinePosition.Character + 1;
+                string severity = diag.Severity == DiagnosticSeverity.Error ? "error" : "warning";
+                sb.AppendLine($"  ({line},{col}): {severity} {diag.Id}: {diag.GetMessage()}");
+            }
+            script.UpdateStatus(sb.ToString().TrimEnd());
 
             script.RaiseCompileError(ex);
 
