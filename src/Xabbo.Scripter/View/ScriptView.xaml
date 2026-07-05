@@ -25,7 +25,7 @@
             </Grid.RowDefinitions>
 
             <!-- Code editor -->
-            <Grid Background="White">
+            <Grid x:Name="editorContainer" Background="White">
                 <Grid.Resources>
                     <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource MaterialDesignScrollBar}">
                         <Setter Property="md:ThemeAssist.Theme" Value="Light" />
@@ -113,50 +113,32 @@
             <ToggleButton Width="36" Height="36"
                           IsChecked="{Binding IsAutostart, Mode=TwoWay}"
                           IsEnabled="{Binding CanAutostart}"
-                          ToolTip="Autostart on connect"
+                          ToolTip="Autostart — run this script automatically when the scripter connects"
                           Margin="0,0,8,0"
                           md:ShadowAssist.ShadowDepth="Depth1"
                           md:ShadowAssist.Darken="False">
                 <ToggleButton.Style>
                     <Style TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource MaterialDesignFloatingActionMiniButton}">
-                        <Setter Property="Background">
-                            <Setter.Value>
-                                <SolidColorBrush Color="White" />
-                            </Setter.Value>
-                        </Setter>
-                        <Setter Property="BorderBrush">
-                            <Setter.Value>
-                                <SolidColorBrush Color="{DynamicResource ApplicationBackgroundColor}" Opacity="0.5" />
-                            </Setter.Value>
-                        </Setter>
+                        <Setter Property="Background" Value="White" />
+                        <Setter Property="Foreground" Value="{DynamicResource ApplicationBackgroundColorBrush}" />
+                        <Setter Property="Opacity" Value="0.7" />
                         <Style.Triggers>
                             <Trigger Property="IsChecked" Value="True">
-                                <Setter Property="Background">
-                                    <Setter.Value>
-                                        <SolidColorBrush Color="White" />
-                                    </Setter.Value>
-                                </Setter>
+                                <Setter Property="Background" Value="#2E7D32" />
+                                <Setter Property="Foreground" Value="White" />
+                                <Setter Property="Opacity" Value="1" />
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Opacity" Value="1" />
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="False">
-                                <Setter Property="Opacity" Value="0.35" />
+                                <Setter Property="Opacity" Value="0.3" />
                             </Trigger>
                         </Style.Triggers>
                     </Style>
                 </ToggleButton.Style>
-                <md:PackIcon Kind="Replay" Width="22" Height="22"
-                             Foreground="{DynamicResource ApplicationBackgroundColorBrush}">
-                    <md:PackIcon.Style>
-                        <Style TargetType="md:PackIcon">
-                            <Setter Property="Opacity" Value="0.4" />
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsAutostart}" Value="True">
-                                    <Setter Property="Foreground" Value="#2E7D32" />
-                                    <Setter Property="Opacity" Value="1" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </md:PackIcon.Style>
-                </md:PackIcon>
+                <md:PackIcon Kind="Power" Width="22" Height="22"
+                             Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}" />
             </ToggleButton>
 
         <Button Width="36" Height="36"

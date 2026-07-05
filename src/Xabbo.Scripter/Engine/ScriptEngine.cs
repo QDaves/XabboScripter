@@ -17,6 +17,9 @@ using Microsoft.CodeAnalysis.CSharp.Scripting;
 using Microsoft.CodeAnalysis.Scripting;
 
 using RoslynPad.Roslyn;
+using RoslynPad.Roslyn.QuickInfo;
+using RoslynPad.Roslyn.BraceMatching;
+using RoslynPad.Roslyn.SignatureHelp;
 
 using Xabbo.Scripter.ViewModel;
 using Xabbo.Scripter.Services;
@@ -104,6 +107,22 @@ public class ScriptEngine
         _logger.LogInformation("Script engine initialized.");
     }
 
+    public void Warmup()
+    {
+        try
+        {
+            RoslynHost.GetService<IQuickInfoProvider>();
+            RoslynHost.GetService<IBraceMatchingService>();
+            RoslynHost.GetService<ISignatureHelpProvider>();
+
+            CSharpScript.Create("0", BaseScriptOptions, globalsType: typeof(G)).Compile();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex, "Roslyn warmup failed (non-fatal): {message}", ex.Message);
+        }
+    }
+
     public bool Compile(ScriptViewModel script)
     {
         if (script.IsCompiling || script.IsRunning)
@@ -129,34 +148,18 @@ public class ScriptEngine
                 filePath = Path.GetFullPath(filePath);
             }
 
-            Script<object> csharpScript;
-
             if (script.IsSavedToDisk)
             {
                 script.Save();
             }
 
-            if (File.Exists(filePath))
-            {
-                using FileStream fs = File.OpenRead(filePath);
-                csharpScript = CSharpScript.Create(
-                    fs,
-                    options: BaseScriptOptions
-                        .WithFilePath(filePath)
-                        .WithFileEncoding(Encoding.UTF8),
-                    globalsType: typeof(G)
-                );
-            }
-            else
-            {
-                csharpScript = CSharpScript.Create(
-                    script.Code,
-                    options: BaseScriptOptions
-                        .WithFilePath(filePath)
-                        .WithFileEncoding(Encoding.UTF8),
-                    globalsType: typeof(G)
-                );
-            }
+            Script<object> csharpScript = CSharpScript.Create(
+                script.Code,
+                options: BaseScriptOptions
+                    .WithFilePath(filePath)
+                    .WithFileEncoding(Encoding.UTF8),
+                globalsType: typeof(G)
+            );
 
             ImmutableArray<Diagnostic> diagnostics = csharpScript.Compile();
             if (diagnostics.Any(x => x.Severity == DiagnosticSeverity.Error))

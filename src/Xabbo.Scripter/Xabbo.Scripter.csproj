@@ -8,6 +8,7 @@
 		<RootNamespace>Xabbo.Scripter</RootNamespace>
 		<ApplicationIcon>Resources\xs.ico</ApplicationIcon>
 		<Configurations>Debug;Release;Develop</Configurations>
+		<PublishReadyToRun>true</PublishReadyToRun>
 	</PropertyGroup>
 
 	<PropertyGroup Label="Rename paths">
@@ -16,10 +17,10 @@
 	</PropertyGroup>
 
 	<PropertyGroup Label="Version">
-		<Version>1.1.6</Version>
-		<AssemblyVersion>1.1.6.0</AssemblyVersion>
-		<FileVersion>1.1.6.0</FileVersion>
-		<InformationalVersion>1.1.6</InformationalVersion>
+		<Version>1.1.6.6</Version>
+		<AssemblyVersion>1.1.6.6</AssemblyVersion>
+		<FileVersion>1.1.6.6</FileVersion>
+		<InformationalVersion>1.1.6.6</InformationalVersion>
 	</PropertyGroup>
 
   <ItemGroup Label="Include resources">
@@ -64,6 +65,9 @@
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 		<None Update="theme.xshd">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="theme-dark.xshd">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 		<None Include="..\..\lib\Xabbo.Messages\messages.ini">
